@@ -1,0 +1,10 @@
+# Ignorar todo
+*
+
+# Excepto el modulo
+!.gitignore
+!app/
+!app/code/
+!app/code/DVP/
+!app/code/DVP/Blog/
+!app/code/DVP/Blog/**

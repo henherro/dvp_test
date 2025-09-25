@@ -1,0 +1,249 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">dvp_blog_post_form.post_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">General Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="back" class="DVP\Blog\Block\Adminhtml\Post\Edit\BackButton"/>
+            <button name="delete" class="DVP\Blog\Block\Adminhtml\Post\Edit\DeleteButton"/>
+            <button name="save" class="DVP\Blog\Block\Adminhtml\Post\Edit\SaveButton"/>
+            <button name="save_and_continue" class="DVP\Blog\Block\Adminhtml\Post\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>dvp_blog_post_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>dvp_blog_post_form.post_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="post_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider name="post_form_data_source" class="DVP\Blog\Model\Post\DataProvider">
+            <settings>
+                <requestFieldName>post_id</requestFieldName>
+                <primaryFieldName>post_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general">
+        <settings>
+            <label>General</label>
+        </settings>
+
+        <field name="title" formElement="input" sortOrder="10">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <field name="url_key" formElement="input" sortOrder="20">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">URL Key</label>
+                <dataScope>url_key</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <field name="content" formElement="textarea" sortOrder="30">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Content</label>
+                <dataScope>content</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <field name="short_content" formElement="textarea" sortOrder="40">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Short Content</label>
+                <dataScope>short_content</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <field name="status" formElement="checkbox" sortOrder="50">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>boolean</dataType>
+                <dataScope>status</dataScope>
+                <label translate="true">Published</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <field name="created_at" formElement="input" sortOrder="60">
+            <settings>
+                <dataType>date</dataType>
+                <label translate="true">Created At</label>
+                <dataScope>created_at</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <disabled>true</disabled>
+            </settings>
+        </field>
+
+        <field name="updated_at" formElement="input" sortOrder="70">
+            <settings>
+                <dataType>date</dataType>
+                <label translate="true">Updated At</label>
+                <dataScope>updated_at</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <disabled>true</disabled>
+            </settings>
+        </field>
+
+        <container name="post_comments">
+            <dynamicRows name="post_comments" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="ui/dynamic-rows/templates/default">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="columnsHeaderAfterRender" xsi:type="boolean">false</item>
+                        <item name="renderDefaultRecord" xsi:type="boolean">false</item>
+                        <item name="deleteButtonLabel" xsi:type="string">Remove</item>
+                        <item name="dataProvider" xsi:type="string">dvp_blog_post_form.post_comments_data_source</item>
+                        <item name="label" xsi:type="string" translate="true">Post Comments</item>
+                        <item name="identificationDRProperty" xsi:type="string">comment_id</item>
+                        <item name="recordTemplate" xsi:type="string">post_comments_template</item>
+                    </item>
+                </argument>
+
+                <settings>
+                    <columnsHeader>true</columnsHeader>
+                    <recordTemplate>record</recordTemplate>
+                    <links>
+                        <link name="insertData">${ $.provider }:data.${ $.dataProvider }</link>
+                    </links>
+                    <addButton>false</addButton>
+                    <componentType>dynamicRows</componentType>
+                    <identificationProperty>comment_id</identificationProperty>
+                    <deleteProperty>delete</deleteProperty>
+                </settings>
+
+            <container name="post_comments_template" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Comment</item>
+                        <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/record</item>
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="showFallbackReset" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+
+                <field name="comment_id">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string">ID</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">comment_id</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                        </item>
+                    </argument>
+                </field>
+
+                <field name="author_name">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Author Name</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">author_name</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="sortOrder" xsi:type="string">10</item>
+                        </item>
+                    </argument>
+                </field>
+
+                <field name="author_email">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Author Email</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">author_email</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="sortOrder" xsi:type="string">20</item>
+                        </item>
+                    </argument>
+                </field>
+
+                <field name="content">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Content</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="formElement" xsi:type="string">textarea</item>
+                            <item name="dataScope" xsi:type="string">content</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="sortOrder" xsi:type="string">30</item>
+                        </item>
+                    </argument>
+                </field>
+
+                <field name="created_at">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Created At</item>
+                            <item name="dataType" xsi:type="string">date</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">created_at</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="sortOrder" xsi:type="string">40</item>
+                        </item>
+                    </argument>
+                </field>
+
+                <actionDelete sortOrder="60">
+                    <settings>
+                        <visible>false</visible>
+                    </settings>
+                </actionDelete>
+            </container>
+        </dynamicRows>
+        </container>
+
+    </fieldset>
+</form>

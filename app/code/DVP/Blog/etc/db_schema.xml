@@ -29,7 +29,6 @@
         <column name="author_email" xsi:type="varchar" length="255" nullable="true" comment="Email del autor"/>
         <column name="content" xsi:type="text" nullable="false" comment="Contenido del comentario"/>
         <column name="created_at" nullable="true" xsi:type="timestamp" default="CURRENT_TIMESTAMP" on_update="false" comment="Fecha de creacion"/>
-        <column name="updated_at" nullable="true" xsi:type="timestamp" default="CURRENT_TIMESTAMP" on_update="true" comment="Fecha de actualizacion"/>
         <constraint xsi:type="foreign" referenceId="FK_DVP_BLOG_COMMENT_POST_ID" 
                     table="dvp_blog_post_comment" column="post_id" 
                     referenceTable="dvp_blog_post" referenceColumn="post_id" 
