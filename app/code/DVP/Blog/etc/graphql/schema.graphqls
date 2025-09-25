@@ -1,0 +1,64 @@
+type Query {
+  blogPosts(post_id: Int): BlogPostResult @doc(description: "Get posts, optionally filtered by ID")
+}
+
+type Mutation {
+    savePost(input: SavePostInput!): SavePostOutput @resolver(class: "DVP\\Blog\\Model\\GraphQl\\Mutation\\SavePost")
+    deletePost(post_id: Int!): DeletePostOutput @doc(description: "Delete a post by ID")
+}
+
+type BlogPostComment {
+  comment_id: Int @doc(description: "Comment ID")
+  post_id: Int @doc(description: "Post ID")
+  author_name: String @doc(description: "Author name")
+  author_email: String @doc(description: "Author email")
+  content: String @doc(description: "Comment content")
+  created_at: String @doc(description: "Created at")
+  updated_at: String @doc(description: "Updated at")
+}
+
+type BlogPost {
+  post_id: Int @doc(description: "Post ID")
+  title: String @doc(description: "Post title")
+  url_key: String @doc(description: "Post URL key")
+  content: String @doc(description: "Full content")
+  short_content: String @doc(description: "Short content")
+  status: Int @doc(description: "0=Draft, 1=Published")
+  created_at: String @doc(description: "Created at")
+  updated_at: String @doc(description: "Updated at")
+  post_comments: [BlogPostComment] @doc(description: "Post comments")
+}
+
+type BlogPostResult {
+  totalRecords: Int @doc(description: "Total posts")
+  items: [BlogPost] @doc(description: "Posts array")
+}
+
+input SavePostInput @doc(description: "Input to create or update a post") {
+    post_id: Int @doc(description: "Post ID (optional, for update)")
+    title: String @doc(description: "Post title")
+    url_key: String @doc(description: "Unique URL key")
+    content: String @doc(description: "Full content")
+    short_content: String @doc(description: "Summary")
+    status: Boolean @doc(description: "Published or not")
+}
+
+type SavePostOutput @doc(description: "Result of the save post mutation") {
+    success: Boolean! @doc(description: "Operation success")
+    post: Post @doc(description: "Saved post data")
+}
+
+type DeletePostOutput @doc(description: "Result of delete post mutation") {
+    success: Boolean! @doc(description: "Operation success")
+}
+
+type Post @doc(description: "Post information") {
+    post_id: Int @doc(description: "Post ID")
+    title: String @doc(description: "Title")
+    url_key: String @doc(description: "Unique URL key")
+    content: String @doc(description: "Content")
+    short_content: String @doc(description: "Summary")
+    status: Boolean @doc(description: "Published or not")
+    created_at: String @doc(description: "Creation date")
+    updated_at: String @doc(description: "Update date")
+}

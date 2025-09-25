@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route url="/V1/dvp-blog/post" method="POST">
+		<service class="DVP\Blog\Api\PostRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="DVP_Blog::post_save"/>
+		</resources>
+	</route>
+	<route url="/V1/dvp-blog/post/search" method="GET">
+		<service class="DVP\Blog\Api\PostRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="DVP_Blog::post_view"/>
+		</resources>
+	</route>
+	<route url="/V1/dvp-blog/post/:postId" method="GET">
+		<service class="DVP\Blog\Api\PostRepositoryInterface" method="get"/>
+		<resources>
+			<resource ref="DVP_Blog::post_view"/>
+		</resources>
+	</route>
+	<route url="/V1/dvp-blog/post/:postId" method="PUT">
+		<service class="DVP\Blog\Api\PostRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="DVP_Blog::post_update"/>
+		</resources>
+	</route>
+	<route url="/V1/dvp-blog/post/:postId" method="DELETE">
+		<service class="DVP\Blog\Api\PostRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="DVP_Blog::post_delete"/>
+		</resources>
+	</route>
+</routes>

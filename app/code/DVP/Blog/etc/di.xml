@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="DVP\Blog\Api\PostRepositoryInterface" type="DVP\Blog\Model\PostRepository"/>
+	<preference for="DVP\Blog\Api\Data\PostInterface" type="DVP\Blog\Model\Post"/>
+	<preference for="DVP\Blog\Api\Data\PostSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="DVP\Blog\Model\ResourceModel\Post\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">dvp_blog_post</argument>
+			<argument name="resourceModel" xsi:type="string">DVP\Blog\Model\ResourceModel\Post\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="dvp_blog_post_listing_data_source" xsi:type="string">DVP\Blog\Model\ResourceModel\Post\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+</config>
