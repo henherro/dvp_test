@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">dvp_blog_post_listing.dvp_blog_post_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>dvp_blog_post_columns</spinner>
+        <deps>
+            <dep>dvp_blog_post_listing.dvp_blog_post_listing_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add new post</label>
+            </button>
+        </buttons>
+    </settings>
+
+    <dataSource name="dvp_blog_post_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">post_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>DVP_Blog::post</aclResource>
+        <dataProvider name="dvp_blog_post_listing_data_source" class="DVP\Blog\Model\Post\DataProvider">
+            <settings>
+                <requestFieldName>post_id</requestFieldName>
+                <primaryFieldName>post_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="dvp_blog_post_columns">
+		<actionsColumn name="actions" class="DVP\Blog\Ui\Component\Listing\Column\PostActions" >
+            <settings>
+                <indexField>post_id</indexField>
+            </settings>
+        </actionsColumn>
+        <column name="post_id" >
+            <settings>
+                <filter>text</filter>
+                <sorting>asc</sorting>
+                <label translate="true">ID</label>
+            </settings>
+        </column>
+        <column name="title" >
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Title</label>
+            </settings>
+        </column>
+        <column name="url_key" >
+            <settings>
+                <filter>text</filter>
+                <label translate="true">URL Key</label>
+            </settings>
+        </column>
+        <column name="short_content" >
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Short Content</label>
+            </settings>
+        </column>
+        <column name="created_at">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Created At</label>
+            </settings>
+        </column>
+        <column name="updated_at" >
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Updated At</label>
+            </settings>
+        </column>
+    </columns>
+</listing>
