@@ -1,5 +1,5 @@
 <?php
-namespace DVP\Blog\Model\GraphQl\Mutation;
+namespace DVP\Blog\Model\Resolver\Mutation;
 
 use DVP\Blog\Api\PostRepositoryInterface;
 use DVP\Blog\Api\Data\PostInterfaceFactory;
@@ -30,7 +30,7 @@ class SavePost implements ResolverInterface
 
         if (!empty($input['post_id'])) {
             try {
-                $post = $this->postRepository->getById($input['post_id']);
+                $post = $this->postRepository->get($input['post_id']);
             } catch (\Exception $e) {
                 throw new LocalizedException(__('Post not found.'));
             }

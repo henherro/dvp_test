@@ -1,0 +1,37 @@
+{
+    "dvp_blog_post": {
+        "column": {
+            "post_id": true,
+            "title": true,
+            "url_key": true,
+            "content": true,
+            "short_content": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "DVP_BLOG_POST_POST_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "dvp_blog_post_comment": {
+        "column": {
+            "comment_id": true,
+            "post_id": true,
+            "author_name": true,
+            "author_email": true,
+            "content": true,
+            "created_at": true
+        },
+        "index": {
+            "DVP_BLOG_POST_COMMENT_COMMENT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "DVP_BLOG_POST_COMMENT_POST_ID_DVP_BLOG_POST_POST_ID": true
+        }
+    }
+}

@@ -1,11 +1,14 @@
 <?php
-namespace DVP\Blog\Model\GraphQl\Mutation;
+namespace DVP\Blog\Model\Resolver\Mutation;
 
+use DVP\Blog\Model\PostRepository;
 use DVP\Blog\Api\PostRepositoryInterface;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+
 
 class DeletePost implements ResolverInterface
 {
@@ -23,9 +26,14 @@ class DeletePost implements ResolverInterface
             throw new LocalizedException(__('Post ID is required.'));
         }
 
-        $post = $this->postRepository->getById($postId);
-        if (!$post->getId()) {
-            throw new LocalizedException(__('Post not found.'));
+        try {
+            $post = $this->postRepository->get($postId); 
+            $this->postRepository->delete($post);
+            return ['success' => true];
+        } catch (NoSuchEntityException $e) {
+            return ['success' => false];
+        } catch (\Exception $e) {
+            throw new LocalizedException(__('Error deleting post: %1', $e->getMessage()));
         }
 
         $this->postRepository->delete($post);

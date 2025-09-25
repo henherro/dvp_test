@@ -1,13 +1,13 @@
 type Query {
-  blogPosts(post_id: Int): BlogPostResult @doc(description: "Get posts, optionally filtered by ID")
+  dvpBlogPosts(post_id: Int!): DVPBlogPostResult @resolver(class: "DVP\\Blog\\Model\\Resolver\\BlogPosts") @doc(description: "Get posts, optionally filtered by ID")
 }
 
 type Mutation {
-    savePost(input: SavePostInput!): SavePostOutput @resolver(class: "DVP\\Blog\\Model\\GraphQl\\Mutation\\SavePost")
-    deletePost(post_id: Int!): DeletePostOutput @doc(description: "Delete a post by ID")
+    dvpSavePost(input: DVPSavePostInput!): DVPSavePostOutput @resolver(class: "DVP\\Blog\\Model\\Resolver\\Mutation\\SavePost") @doc(description: "Create or update a post")
+    dvpDeletePost(post_id: Int): DVPDeletePostOutput @resolver(class: "DVP\\Blog\\Model\\Resolver\\Mutation\\DeletePost") @doc(description: "Delete a post by ID")
 }
 
-type BlogPostComment {
+type DVPBlogPostComment {
   comment_id: Int @doc(description: "Comment ID")
   post_id: Int @doc(description: "Post ID")
   author_name: String @doc(description: "Author name")
@@ -17,7 +17,7 @@ type BlogPostComment {
   updated_at: String @doc(description: "Updated at")
 }
 
-type BlogPost {
+type DVPBlogPost {
   post_id: Int @doc(description: "Post ID")
   title: String @doc(description: "Post title")
   url_key: String @doc(description: "Post URL key")
@@ -26,15 +26,15 @@ type BlogPost {
   status: Int @doc(description: "0=Draft, 1=Published")
   created_at: String @doc(description: "Created at")
   updated_at: String @doc(description: "Updated at")
-  post_comments: [BlogPostComment] @doc(description: "Post comments")
+  post_comments: [DVPBlogPostComment] @doc(description: "Post comments")
 }
 
-type BlogPostResult {
+type DVPBlogPostResult {
   totalRecords: Int @doc(description: "Total posts")
-  items: [BlogPost] @doc(description: "Posts array")
+  items: [DVPBlogPost] @doc(description: "Posts array")
 }
 
-input SavePostInput @doc(description: "Input to create or update a post") {
+input DVPSavePostInput @doc(description: "Input to create or update a post") {
     post_id: Int @doc(description: "Post ID (optional, for update)")
     title: String @doc(description: "Post title")
     url_key: String @doc(description: "Unique URL key")
@@ -43,22 +43,11 @@ input SavePostInput @doc(description: "Input to create or update a post") {
     status: Boolean @doc(description: "Published or not")
 }
 
-type SavePostOutput @doc(description: "Result of the save post mutation") {
+type DVPSavePostOutput @doc(description: "Result of the save post mutation") {
     success: Boolean! @doc(description: "Operation success")
-    post: Post @doc(description: "Saved post data")
+    post: DVPBlogPost @doc(description: "Saved post data")
 }
 
-type DeletePostOutput @doc(description: "Result of delete post mutation") {
+type DVPDeletePostOutput @doc(description: "Result of delete post mutation") {
     success: Boolean! @doc(description: "Operation success")
-}
-
-type Post @doc(description: "Post information") {
-    post_id: Int @doc(description: "Post ID")
-    title: String @doc(description: "Title")
-    url_key: String @doc(description: "Unique URL key")
-    content: String @doc(description: "Content")
-    short_content: String @doc(description: "Summary")
-    status: Boolean @doc(description: "Published or not")
-    created_at: String @doc(description: "Creation date")
-    updated_at: String @doc(description: "Update date")
 }
