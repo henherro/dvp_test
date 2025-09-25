@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="dvp_blog_post" resource="default" engine="innodb" comment="Posts del Blog">
+        <column name="post_id" xsi:type="int" nullable="false" unsigned="true" identity="true" comment="Id del Post" />
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="post_id"/>
+		</constraint>
+		<index referenceId="DVP_BLOG_POST_ID" indexType="btree">
+			<column name="post_id"/>
+		</index>
+		<column name="title" xsi:type="varchar" nullable="true" comment="Titulo" length="255"/>
+		<column name="url_key" xsi:type="varchar" nullable="true" comment="URL key unica" length="255"/>
+		<column name="content" xsi:type="text" nullable="true" comment="Contenido completo"/>
+		<column name="short_content" xsi:type="text" nullable="true" comment="Resumen"/>
+		<column name="status" xsi:type="smallint" nullable="true" comment="0=Edicion 1=Publicado" identity="false"/>
+		<column name="created_at" nullable="true" xsi:type="timestamp" default="CURRENT_TIMESTAMP" on_update="false" comment="Fecha de creacion"/>
+        <column name="updated_at" nullable="true" xsi:type="timestamp" default="CURRENT_TIMESTAMP" on_update="true" comment="Fecha de actualizacion"/>
+	</table>
+    <table name="dvp_blog_post_comment" resource="default" engine="innodb" comment="Comentarios del Post">
+        <column name="comment_id" xsi:type="int" nullable="false" unsigned="true" identity="true" comment="ID del Comentario" />
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="comment_id"/>
+		</constraint>
+		<index referenceId="DVP_BLOG_POST_COMMENT_ID" indexType="btree">
+			<column name="comment_id"/>
+		</index>
+        <column name="post_id" xsi:type="int" nullable="false" unsigned="true" comment="Id del Post" />
+        <column name="author_name" xsi:type="varchar" length="255" nullable="true" comment="Nombre del autor"/>
+        <column name="author_email" xsi:type="varchar" length="255" nullable="true" comment="Email del autor"/>
+        <column name="content" xsi:type="text" nullable="false" comment="Contenido del comentario"/>
+        <column name="created_at" nullable="true" xsi:type="timestamp" default="CURRENT_TIMESTAMP" on_update="false" comment="Fecha de creacion"/>
+        <column name="updated_at" nullable="true" xsi:type="timestamp" default="CURRENT_TIMESTAMP" on_update="true" comment="Fecha de actualizacion"/>
+        <constraint xsi:type="foreign" referenceId="FK_DVP_BLOG_COMMENT_POST_ID" 
+                    table="dvp_blog_post_comment" column="post_id" 
+                    referenceTable="dvp_blog_post" referenceColumn="post_id" 
+                    onDelete="CASCADE"/>
+    </table>
+</schema>

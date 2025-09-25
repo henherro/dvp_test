@@ -1,0 +1,22 @@
+{
+    "name": "dvp/module-blog",
+    "description": "DVP Blog Basico",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Henry",
+            "email": "henryhernandezroldan@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "DVP\\Blog\\": ""
+        }
+    }
+}
